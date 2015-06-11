@@ -1,2 +1,6 @@
-# spectral-search-spark
-Spectral search algorithms using Apache Spark (and Python)
+# Spectral search with Spark  
+
+Experiences with Spark for spectral search.  
+
+### [Loading a PRIDE Cluster library into a Spark RDD](read-spectrum-lib.ipynb)  
+
