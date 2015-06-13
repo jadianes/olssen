@@ -22,10 +22,12 @@ Run it using:
     /path/to/spark/bin/spark-submit server.py  
 
 After loading the Spark context and the spectral search library, the server
-will be ready to be queried at the following end points:  
+will be ready to be queried at the following end points, (speaking JSON 
+format):  
 
-- `/stats`: returns statistics about the spectral libraries that have been
+- `GET /stats`: returns statistics about the spectral libraries that have been
 loaded, including its name and peptide counts.  
  
-
+- `POST /search`: spectral search for a given peak list as an array of 
+(mz, intensity) pairs.  
 
