@@ -4,9 +4,12 @@ Experiences with Spark for spectral search.
 
 ## Notebooks  
 
-### [Loading a PRIDE Cluster library into a Spark RDD](read-spectrum-lib.ipynb)  
+Some IPython/Jupyter notebooks to explore different spectral search
+concepts.  
 
-### [The SpectraST algorithm for spectral search](spectraST.ipynb)  
+### [Loading a PRIDE Cluster library into a Spark RDD](notebooks/read-spectrum-lib.ipynb)  
+
+### [The SpectraST algorithm for spectral search](notebooks/spectraST.ipynb)  
 
 ## The on-line spectral search server  
 
