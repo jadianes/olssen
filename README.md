@@ -28,6 +28,10 @@ loaded, including its name and peptide counts.
 - `POST /search`: spectral search for a given peak list as an array of 
 (mz, intensity) pairs.  
 
+#### Examples  
+
+    curl --data "peaks=[(m1,i1),...,(mn,in)]" http://127.0.0.1:5000/search   
+
 ## Other tools  
 
 ### Spectrum library loader  
