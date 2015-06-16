@@ -1,11 +1,12 @@
 # An on-line Spectral Search server  
 
-Our server provides a RESTful like API to perform **on-line spectral search** for proteomics
+Our server provides a RESTful-like API to perform **on-line spectral search** for proteomics
 spectral data. It is based on the [SpectraST](http://tools.proteomecenter.org/wiki/index.php?title=Software:SpectraST) 
-algorith for spectral search and uses [PRIDE Cluster spectral libraries](http://wwwdev.ebi.ac.uk/pride/cluster/#/libraries).  
+algorithm for spectral search and uses [PRIDE Cluster spectral libraries](http://wwwdev.ebi.ac.uk/pride/cluster/#/libraries).  
 
-The server is buit for scalability and performance with big datasets. It executes
-over [Apache Spark](https://spark.apache.org/) clusters and it has a very simple 
+The server is buit for scalability and performance working with big datasets. It uses 
+[Flask](http://flask.pocoo.org/) and performs its spectral searches on 
+[Apache Spark](https://spark.apache.org/) clusters. It has a very simple 
 deployment cycle (see next).  
 
 ## Quick start  
