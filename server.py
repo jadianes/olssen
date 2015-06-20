@@ -28,24 +28,25 @@ def stats():
 def search():
     # get the query spectrum from the request object
     query_spectrum = json.loads(request.form['query'])
+    return json.dumps(query_spectrum)
+    
+    # human_spectrum_library_denoise = \
+    #     human_spectrum_library.filter(lambda peptide: len(peptide[1]) >= 6)
+    # human_spectrum_library_denoise = \
+    #     human_spectrum_library_denoise.filter(lambda peptide: num_peaks_out_of_500th(peptide)==0)
+    # human_spectrum_library_denoise = \
+    #     human_spectrum_library_denoise.map(remove_low_intensity_peaks_and_scale)    
+    # human_spectrum_library_with_bins = \
+    #     human_spectrum_library_denoise.map(bin_spectrum)
+    # # we need to broadcast our query peaks to make it available accross the cluster workers
+    # query_peaks_bc = sc.broadcast(query_spectrum)
+    # # then we can perform the dot product
+    # human_spectrum_library_vectors = \
+    #     human_spectrum_library_with_bins.map(lambda peptide: score_and_peptide(peptide, query_peaks_bc))
+    # best_peptide_matches = \
+    #     human_spectrum_library_vectors.takeOrdered(10, lambda pep_score: -pep_score[1])
 
-    human_spectrum_library_denoise = \
-        human_spectrum_library.filter(lambda peptide: len(peptide[1]) >= 6)
-    human_spectrum_library_denoise = \
-        human_spectrum_library_denoise.filter(lambda peptide: num_peaks_out_of_500th(peptide)==0)
-    human_spectrum_library_denoise = \
-        human_spectrum_library_denoise.map(remove_low_intensity_peaks_and_scale)    
-    human_spectrum_library_with_bins = \
-        human_spectrum_library_denoise.map(bin_spectrum)
-    # we need to broadcast our query peaks to make it available accross the cluster workers
-    query_peaks_bc = sc.broadcast(query_spectrum)
-    # then we can perform the dot product
-    human_spectrum_library_vectors = \
-        human_spectrum_library_with_bins.map(lambda peptide: score_and_peptide(peptide, query_peaks_bc))
-    best_peptide_matches = \
-        human_spectrum_library_vectors.takeOrdered(10, lambda pep_score: -pep_score[1])
-
-    return json.dumps(best_peptide_matches)
+    # return json.dumps(best_peptide_matches)
 
 
 def num_peaks_out_of_500th(spectrum):
