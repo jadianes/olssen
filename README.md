@@ -31,13 +31,9 @@ loaded, including its name and peptide counts.
 
 #### Examples  
 
-    curl --data "query=[(514, 71.320754342617548),
-  		(1030, 11.717081547894082),
-  		(195, 7.6380625815713241),
-  		(668, 160.64071712987339),
-  		(545, 100.8157725755251),
-  		(554, 75.973482215836341),
-  		(699, 37.12007543095784)]" http://127.0.0.1:5000/search   
+    curl --data-binary @query.mgf http://127.0.0.1:5000/search   
+
+Where the file `query.gf` contains the list of peaks.  
 
 ## Other tools  
 
