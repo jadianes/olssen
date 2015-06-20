@@ -27,18 +27,7 @@ def stats():
 @app.route("/search", methods = ["POST"])
 def search():
     # get the query spectrum from the request object
-    # TODO, by now we will hardcode this
-    query_spectrum = [(514, 71.320754342617548),
-        (771, 33.418408100925454),
-        (900, 9.1219515455849685),
-        (618, 70.810663038838996),
-        (1030, 11.717081547894082),
-        (524, 156.81336040019039),
-        (399, 18.09419796509367),
-        (658, 66.408056740127549),
-        (195, 7.6380625815713241),
-        (916, 9.4371605899232218),
-        (920, 10.771258050942796)]
+    query_spectrum = json.loads(request.form['query'])
 
     human_spectrum_library_denoise = \
         human_spectrum_library.filter(lambda peptide: len(peptide[1]) >= 6)
