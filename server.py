@@ -30,13 +30,17 @@ def search():
     query_list = request.form.keys()[0].strip().split("\n")
     query_list = map(lambda x: x.split(" "), query_list)
     query = map(lambda x: (int(float(x[0])), float(x[1])), query_list)
-    print query
-    
+    # we need to process the query peaks as we do with the spectrum lirbaries
+    query = remove_low_intensity_peaks(("query", query))[1]
+    query = scale_peaks(("query", query))[1]
+    query = bin_spectrum(("query", query))[1]
+    query = normalise_peaks(("query", query))[1]
+
     # we need to broadcast our query peaks to make it available accross the cluster workers
     query_peaks_bc = sc.broadcast(query)
     # then we can perform the dot product
     human_spectrum_library_vectors = \
-        human_spectrum_library_with_bins.map(lambda peptide: score_and_peptide(peptide, query_peaks_bc))
+        human_spectrum_library_with_bins_normalised.map(lambda peptide: score_and_peptide(peptide, query_peaks_bc))
     best_peptide_matches = \
         human_spectrum_library_vectors.takeOrdered(10, lambda pep_score: -pep_score[1])
 
@@ -92,6 +96,12 @@ def bin_spectrum(spectrum):
     return (spectrum[0], peaks_with_bins)
 
 
+def normalise_peaks(spectrum):
+    magnitude = sqrt(sum([peak[1] ** 2 for peak in spectrum[1]]))
+    norm_peaks = [(peak[0], peak[1]/magnitude) for peak in spectrum[1]]
+    return (spectrum[0], norm_peaks)
+
+
 def score_and_peptide(peptide, query_peaks_bc):
     
     # get max vector size based on bins
@@ -135,6 +145,10 @@ if __name__ == "__main__":
 
     human_spectrum_library_with_bins = \
         human_spectrum_library_denoise.map(bin_spectrum).cache()
+
+    human_spectrum_library_with_bins_normalised = \
+        human_spectrum_library_with_bins.map(normalise_peaks)
+
     print "Successfully pre-processed Human library: {} peptides left".format(human_spectrum_library_with_bins.count())
 
 
