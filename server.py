@@ -29,17 +29,9 @@ def search():
     # get the query spectrum from the request object
     query_list = request.form.keys()[0].strip().split("\n")
     query_list = map(lambda x: x.split(" "), query_list)
-    query = map(lambda x: (x[0], x[1]), query_list)
+    query = map(lambda x: (int(float(x[0])), float(x[1])), query_list)
     print query
     
-    human_spectrum_library_denoise = \
-        human_spectrum_library.filter(lambda peptide: len(peptide[1]) >= 6)
-    human_spectrum_library_denoise = \
-        human_spectrum_library_denoise.filter(lambda peptide: num_peaks_out_of_500th(peptide)==0)
-    human_spectrum_library_denoise = \
-        human_spectrum_library_denoise.map(remove_low_intensity_peaks_and_scale)    
-    human_spectrum_library_with_bins = \
-        human_spectrum_library_denoise.map(bin_spectrum)
     # we need to broadcast our query peaks to make it available accross the cluster workers
     query_peaks_bc = sc.broadcast(query)
     # then we can perform the dot product
@@ -51,14 +43,26 @@ def search():
     return json.dumps(best_peptide_matches)
 
 
-def num_peaks_out_of_500th(spectrum):
-    charge = int(spectrum[0].split("/")[1])
-    return len([peak for peak in spectrum[1] if peak[0]>(charge*500.0)])
+def num_peaks_out_of_500_th(spectrum):
+    """
+    Count the number of peaks out of 500 thomson in the M/Z range
+    """
+    charge = int(spectrum[0].split("/")[-1])
+    peaks_out = [peak for peak in spectrum[1] if peak[0]>(charge*500.0)]
+    if not peaks_out:
+        return 0
+    else:
+        return len(peaks_out)
 
 
-def remove_low_intensity_peaks_and_scale(spectrum):
-    clean_peaks = [(peak[0], sqrt(peak[1])) for peak in spectrum[1] if peak[1]>=2.0]
+def remove_low_intensity_peaks(spectrum):
+    clean_peaks = [peak for peak in spectrum[1] if len(peak)==2 and peak[1]>=2.0]
     return (spectrum[0], clean_peaks)
+
+
+def scale_peaks(spectrum):
+    scaled_peaks = [(peak[0], sqrt(peak[1])) for peak in spectrum[1]]
+    return (spectrum[0], scaled_peaks)
 
 
 def to_bin(min_mz, bins, bin_size, value):
@@ -116,7 +120,23 @@ if __name__ == "__main__":
 
     # load human library from pickle file
     human_spectrum_library = sc.pickleFile("./human/lib.file").cache()
-    print "Human library loaded"
+    print "Successfully loaded Human spectrum library"
+
+    print "Preparing Human library for search ..."
+
+    human_spectrum_library_denoise = \
+        human_spectrum_library.filter(lambda peptide: len(peptide[1]) >= 6)
+    
+#    human_spectrum_library_denoise = \
+#        human_spectrum_library_denoise.filter(lambda peptide: num_peaks_out_of_500_th(peptide)==0)
+
+    human_spectrum_library_denoise = \
+        human_spectrum_library_denoise.map(remove_low_intensity_peaks).filter(lambda peptide: len(peptide[1])>0).map(scale_peaks)    
+
+    human_spectrum_library_with_bins = \
+        human_spectrum_library_denoise.map(bin_spectrum).cache()
+    print "Successfully pre-processed Human library: {} peptides left".format(human_spectrum_library_with_bins.count())
+
 
     # start server
     app.run()
