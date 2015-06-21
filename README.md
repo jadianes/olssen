@@ -19,6 +19,7 @@ Run it using:
 
     /path/to/spark/bin/spark-submit server.py  
 
+Or have a look at the provided `start_server.sh` script as a guide.
 After loading the Spark context and the spectral search library, the server
 will be ready to be queried at the following end points, (speaking JSON 
 format):  
