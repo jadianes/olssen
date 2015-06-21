@@ -151,7 +151,6 @@ if __name__ == "__main__":
 
     print "Successfully pre-processed Human library: {} peptides left".format(human_spectrum_library_with_bins.count())
 
-
-    # start server
-    app.run()
+    # start server, visible outside localhost
+    app.run(host= '0.0.0.0', port = 5432)
 

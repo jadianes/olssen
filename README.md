@@ -31,9 +31,10 @@ loaded, including its name and peptide counts.
 
 #### Examples  
 
-    curl --data-binary @query.mgf http://127.0.0.1:5000/search   
+    curl --data-binary @query.mgf http://<server_IP>:5432/search   
 
-Where the file `query.mgf` contains the list of peaks to search for.  
+Where the file `query.mgf` contains the list of peaks to search for, and
+`<server_IP> is the IP address of the host where `server.py` is running.    
 
 ## Other tools  
 
