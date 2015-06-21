@@ -33,7 +33,7 @@ loaded, including its name and peptide counts.
 
     curl --data-binary @query.mgf http://127.0.0.1:5000/search   
 
-Where the file `query.gf` contains the list of peaks.  
+Where the file `query.mgf` contains the list of peaks to search for.  
 
 ## Other tools  
 
