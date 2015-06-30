@@ -20,6 +20,7 @@ Run it using:
 
     /path/to/spark/bin/spark-submit server.py  
 
+Or have a look at the provided `start_server.sh` script as a guide.
 After loading the Spark context and the spectral search library, the server
 will be ready to be queried at the following end points, (speaking JSON 
 format):  
@@ -35,7 +36,7 @@ loaded, including its name and peptide counts.
     curl --data-binary @query.mgf http://<server_IP>:5432/search   
 
 Where the file `query.mgf` contains the list of peaks to search for, and
-`<server_IP> is the IP address of the host where `server.py` is running.    
+`<server_IP>` is the IP address of the host where `server.py` is running.    
 
 ## Other tools  
 
