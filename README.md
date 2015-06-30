@@ -5,15 +5,16 @@ spectral data. It is based on the [SpectraST](http://tools.proteomecenter.org/wi
 algorithm for spectral search and uses [PRIDE Cluster spectral libraries](http://wwwdev.ebi.ac.uk/pride/cluster/#/libraries).  
 
 The server is buit for scalability and performance working with big datasets. It uses 
-[Flask](http://flask.pocoo.org/) and performs its spectral searches on 
-[Apache Spark](https://spark.apache.org/) clusters. It has a very simple 
-deployment cycle (see next).  
+[Flask](http://flask.pocoo.org/) on top of [CherryPy's server](http://www.cherrypy.org/) 
+and performs its spectral searches using an engine based on [Apache Spark](https://spark.apache.org/) 
+clusters. The server has a very simple deployment cycle (see next).  
 
 ## Quick start  
 
-The file `server.py` uses [Flask](http://flask.pocoo.org/) to start a RESTful
-web server wrapping a Spark context. Through its API we can perform on-line
-spectral search.  
+The file `server.py` starts a [CherryPy](http://www.cherrypy.org/) server running a 
+[Flask](http://flask.pocoo.org/) `app.py` to start a RESTful
+web server wrapping a Spark-based `engine.py` context. Through its API we can 
+perform on-line spectral search for proteomics data.  
 
 Run it using:
 
