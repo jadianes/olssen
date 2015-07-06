@@ -16,7 +16,10 @@ The file `server.py` starts a [CherryPy](http://www.cherrypy.org/) server runnin
 web server wrapping a Spark-based `engine.py` context. Through its API we can 
 perform on-line spectral search for proteomics data.  
 
-Run it using:
+In order to have the server working properly, the PRIDE Cluster libraries must
+be downloaded and processed into the right folders. See **Getting the Libraries**.  
+
+Once you have the libraries ready, run the server using:
 
     /path/to/spark/bin/spark-submit server.py  
 
@@ -38,7 +41,19 @@ loaded, including its name and peptide counts.
 Where the file `query.mgf` contains the list of peaks to search for, and
 `<server_IP>` is the IP address of the host where `server.py` is running.    
 
-## Other tools  
+## Getting the libraries  
+
+In order to have the server working properly, we must have the PRIDE Cluster
+spectrum libraries available for the Spark cluster. Each of the libraries has
+to be downloaded using `download_and_split_lib.py` and processed using
+`create_lib_file.py`. The final location of the libraries is hardcoded in the
+server in the current version:  
+
+- ./human/lib.file  
+- ./mouse/lib.file  
+- ./contaminants/lib.file  
+
+How to use the two Python scripts is described below.  
 
 #### `download_and_split_lib.py`  
  
