@@ -40,11 +40,18 @@ Where the file `query.mgf` contains the list of peaks to search for, and
 
 ## Other tools  
 
-### `download_and_split_lib.py`  
+#### `download_and_split_lib.py`  
  
-This script downloads a PRIDE Cluster library and split it into a local folder. Example of use:
+This Python script downloads a PRIDE Cluster library and split it into a local folder. Example of use:
 
     python download_and_split_lib.py ftp://ftp.pride.ebi.ac.uk/pride/data/cluster/spectrum-libraries/1.0.1/Contaminants.msp.gz ./contaminants  
+
+#### `create_lib_file.py`  
+
+This Spark/Python script loads a split folder (created with the `download_and_split_lib.py` tool) into an RDD and persist it as a 
+pickle file for later use by the server. Use it through the provided shell script, for example:  
+
+    ./create_lib_file.py ./contaminants ./contaminants/lib.file  
 
  
 ## Concepts  
