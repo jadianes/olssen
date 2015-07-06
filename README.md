@@ -40,9 +40,12 @@ Where the file `query.mgf` contains the list of peaks to search for, and
 
 ## Other tools  
 
-### Spectrum library loader  
+### `download_and_split_lib.py`  
  
-/TODO
+This script downloads a PRIDE Cluster library and split it into a local folder. Example of use:
+
+    python download_and_split_lib.py ftp://ftp.pride.ebi.ac.uk/pride/data/cluster/spectrum-libraries/1.0.1/Contaminants.msp.gz ./contaminants  
+
  
 ## Concepts  
 

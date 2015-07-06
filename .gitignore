@@ -7,4 +7,6 @@ ipython_notebook_spark.out
 **/derby.log
 **/Human.msp.gz
 **/human/
+**/contaminants/
+**/Contaminants.msp.gz
 
