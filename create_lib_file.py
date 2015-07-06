@@ -18,7 +18,6 @@ def parse_file_entry(file_entry):
     """Parse a line in the format:
     /path/to/file file_contents
     """
-    print "Parsing line" + file_entry[0]
     # each file entry is a tuple with the first element being the file path and the second its contents
     file_split = file_entry[1].split("\n")
     # name is the first element in the split, we need to remove the 'name: ' prefix
