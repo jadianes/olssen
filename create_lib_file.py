@@ -15,6 +15,10 @@ def init_spark_context():
 
 
 def parse_file_entry(file_entry):
+    """Parse a line in the format:
+    /path/to/file file_contents
+    """
+    print "Parsing line" + file_entry[0]
     # each file entry is a tuple with the first element being the file path and the second its contents
     file_split = file_entry[1].split("\n")
     # name is the first element in the split, we need to remove the 'name: ' prefix
@@ -41,12 +45,13 @@ def main():
     logger.info("There are %s spectrum files in the folder", \
         len([name for name in os.listdir(args.split_folder) if os.path.isfile(os.path.join(args.split_folder, name))]))
     raw_files_RDD = sc.wholeTextFiles (args.split_folder)
-    spectrum_library_RDD = raw_files_RDD.map(parse_file_entry)
-    logger.info("Library loaded")
+    # Parse files with content length > 0 (some files happen to be empty!)
+    spectrum_library_RDD = raw_files_RDD.filter(lambda x: len(x[1])>0).map(parse_file_entry)
+    logger.info("Library loaded with %s peptides", spectrum_library_RDD.count())
 
     # Save it
     logger.info("Persisting RDD into file %s", args.lib_file)
-    spectrum_library_RDD.saveAsPickleFile(os.path.join(args.split_folder, args.lib_file))
+    spectrum_library_RDD.saveAsPickleFile(args.lib_file)
     logger.info("Library persisted")
 
 
