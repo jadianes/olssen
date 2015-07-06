@@ -99,27 +99,32 @@ def score_and_peptide(peptide, query_peaks_bc):
 
 
 class SpectralSearch:
-    """
-    A spectral search engine
+    """A spectral search engine
     """
 
 
     def get_stats(self):
-        """
-        Return stats from loeaded spectrum libraries
+        """Return stats from loeaded spectrum libraries
         """
         stats = []
         human_stats = {}
         human_stats['species'] = "human"
-        human_stats['peptide_count'] = self.human_spectrum_library.count()
+        human_stats['peptide_count'] = self.human_spectrum_library_RDD.count()
         stats.append(human_stats)
+        contaminants_stats = {}
+        contaminants_stats['species'] = "contaminants"
+        contaminants_stats['peptide_count'] = self.contaminants_spectrum_library_RDD.count()
+        stats.append(contaminants_stats)
+        mouse_stats = {}
+        mouse_stats['species'] = "mouse"
+        mouse_stats['peptide_count'] = self.mouse_spectrum_library_RDD.count()
+        stats.append(mouse_stats)
 
         return stats
 
 
     def search(self, query):
-        """
-        Return best pepetide matches for a given query
+        """Return best pepetide matches for a given query
         """
         # we need to process the query peaks as we do with the spectrum lirbaries
         query = remove_low_intensity_peaks(("query", query))[1]
@@ -130,12 +135,25 @@ class SpectralSearch:
         # then, we need to broadcast our query peaks to make it available accross the cluster workers
         query_peaks_bc = self.sc.broadcast(query)
         # then we can perform the dot product
-        human_spectrum_library_vectors = \
-            self.human_spectrum_library_with_bins_normalised.map(lambda peptide: score_and_peptide(peptide, query_peaks_bc))
+        human_spectrum_library_vectors_RDD = \
+            self.human_spectrum_library_with_bins_normalised_RDD.map(lambda peptide: score_and_peptide(peptide, query_peaks_bc))
         best_peptide_matches = \
-            human_spectrum_library_vectors.takeOrdered(10, lambda pep_score: -pep_score[1])
+            human_spectrum_library_vectors_RDD.takeOrdered(10, lambda pep_score: -pep_score[1])
 
         return best_peptide_matches
+
+
+    def __process_library(self, spectrum_library_RDD):
+        spectrum_library_denoise_RDD = \
+            spectrum_library_RDD.filter(lambda peptide: len(peptide[1]) >= 6)
+#        spectrum_library_denoise = \
+#            spectrum_library_denoise.filter(lambda peptide: num_peaks_out_of_500_th(peptide)==0)
+        spectrum_library_denoise_RDD = \
+            spectrum_library_denoise_RDD.map(remove_low_intensity_peaks).filter(lambda peptide: len(peptide[1])>0).map(scale_peaks)
+        spectrum_library_with_bins_RDD =  spectrum_library_denoise_RDD.map(bin_spectrum).cache()
+        spectrum_library_with_bins_normalised_RDD = spectrum_library_with_bins_RDD.map(normalise_peaks)
+
+        return spectrum_library_with_bins_normalised_RDD
 
 
     def __init__(self, sc):
@@ -144,25 +162,21 @@ class SpectralSearch:
         """
         self.sc = sc
         # load human library from pickle file
-        self.human_spectrum_library = sc.pickleFile("./human/lib.file").cache()
+        self.human_spectrum_library_RDD = self.sc.pickleFile("./human/lib.file").cache()
         logger.info("Successfully loaded Human spectrum library")
+        self.contaminants_spectrum_library_RDD = self.sc.pickleFile("./contaminants/lib.file").cache()
+        logger.info("Successfully loaded Contaminants spectrum library")
+        self.mouse_spectrum_library_RDD = self.sc.pickleFile("./mouse/lib.file").cache()
+        logger.info("Successfully loaded Mouse spectrum library")
 
         logger.info("Preparing Human library for search ...")
+        self.human_spectrum_library_with_bins_normalised_RDD = self.__process_library(self.human_spectrum_library_RDD)
+        logger.info("Successfully pre-processed Human library: {} peptides left".format(self.human_spectrum_library_with_bins_normalised_RDD.count()))
 
-        human_spectrum_library_denoise = \
-            self.human_spectrum_library.filter(lambda peptide: len(peptide[1]) >= 6)
-    
-#        human_spectrum_library_denoise = \
-#            human_spectrum_library_denoise.filter(lambda peptide: num_peaks_out_of_500_th(peptide)==0)
+        logger.info("Preparing Contaminant library for search ...")
+        self.contaminants_spectrum_library_with_bins_normalised_RDD = self.__process_library(self.contaminants_spectrum_library_RDD)
+        logger.info("Successfully pre-processed Contaminants library: {} peptides left".format(self.contaminants_spectrum_library_with_bins_normalised_RDD.count()))
 
-        human_spectrum_library_denoise = \
-            human_spectrum_library_denoise.map(remove_low_intensity_peaks).filter(lambda peptide: len(peptide[1])>0).map(scale_peaks)
-
-        human_spectrum_library_with_bins = \
-            human_spectrum_library_denoise.map(bin_spectrum).cache()
-
-        self.human_spectrum_library_with_bins_normalised = \
-            human_spectrum_library_with_bins.map(normalise_peaks)
-
-        logger.info("Successfully pre-processed Human library: {} peptides left".format(self.human_spectrum_library_with_bins_normalised.count()))
-
+        logger.info("Preparing Mouse library for search ...")
+        self.mouse_spectrum_library_with_bins_normalised_RDD = self.__process_library(self.mouse_spectrum_library_RDD)
+        logger.info("Successfully pre-processed Mouse library: {} peptides left".format(self.mouse_spectrum_library_with_bins_normalised_RDD.count()))
