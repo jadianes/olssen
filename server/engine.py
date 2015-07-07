@@ -162,11 +162,11 @@ class SpectralSearch:
         """
         self.sc = sc
         # load human library from pickle file
-        self.human_spectrum_library_RDD = self.sc.pickleFile("./human/lib.file").cache()
+        self.human_spectrum_library_RDD = self.sc.pickleFile("../spectrumlibs/human/lib.file").cache()
         logger.info("Successfully loaded Human spectrum library")
-        self.contaminants_spectrum_library_RDD = self.sc.pickleFile("./contaminants/lib.file").cache()
+        self.contaminants_spectrum_library_RDD = self.sc.pickleFile("../spectrumlibs/contaminants/lib.file").cache()
         logger.info("Successfully loaded Contaminants spectrum library")
-        self.mouse_spectrum_library_RDD = self.sc.pickleFile("./mouse/lib.file").cache()
+        self.mouse_spectrum_library_RDD = self.sc.pickleFile("../spectrumlibs/mouse/lib.file").cache()
         logger.info("Successfully loaded Mouse spectrum library")
 
         logger.info("Preparing Human library for search ...")

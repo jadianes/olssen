@@ -11,7 +11,7 @@ clusters. The server has a very simple deployment cycle (see next).
 
 ## Quick start  
 
-The file `server.py` starts a [CherryPy](http://www.cherrypy.org/) server running a 
+The file `server/server.py` starts a [CherryPy](http://www.cherrypy.org/) server running a 
 [Flask](http://flask.pocoo.org/) `app.py` to start a RESTful
 web server wrapping a Spark-based `engine.py` context. Through its API we can 
 perform on-line spectral search for proteomics data.  
@@ -39,19 +39,20 @@ loaded, including its name and peptide counts.
     curl --data-binary @samples/query.mgf http://<server_IP>:5432/search   
 
 Where the file `query.mgf` contains the list of peaks to search for, and
-`<server_IP>` is the IP address of the host where `server.py` is running.    
+`<server_IP>` is the IP address of the host where `server.py` is running.
+Here we are asuming that we are at the root where `samples/` folder is located.      
 
 ## Getting the libraries  
 
 In order to have the server working properly, we must have the PRIDE Cluster
 spectrum libraries available for the Spark cluster. Each of the libraries has
-to be downloaded using `download_and_split_lib.py` and processed using
-`create_lib_file.py`. The final location of the libraries is hardcoded in the
-server in the current version:  
+to be downloaded using `tools/download_and_split_lib.py` and processed using
+`tools/create_lib_file.py`. The final location of the libraries is hardcoded in the
+server in the current version. So, from the folder where the server is started:  
 
-- ./human/lib.file  
-- ./mouse/lib.file  
-- ./contaminants/lib.file  
+- ../spectrumlibs/human/lib.file  
+- ../spectrumlibs/mouse/lib.file  
+- ../spectrumlibs/contaminants/lib.file  
 
 How to use the two Python scripts is described below.  
 
@@ -66,7 +67,7 @@ This Python script downloads a PRIDE Cluster library and split it into a local f
 This Spark/Python script loads a split folder (created with the `download_and_split_lib.py` tool) into an RDD and persist it as a 
 pickle file for later use by the server. Use it through the provided shell script, for example:  
 
-    ./create_lib_file.py ./contaminants ./contaminants/lib.file  
+    ./create_lib_file.sh ../spectrumlibs/contaminants ../spectrumlibs/contaminants/lib.file  
 
  
 ## Concepts  
