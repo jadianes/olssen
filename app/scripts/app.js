@@ -12,7 +12,8 @@ angular
   .module('onlineSpectralSearchGuiApp', [
     'ngAnimate',
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'restangular'
   ])
   .config(function ($routeProvider) {
     $routeProvider
