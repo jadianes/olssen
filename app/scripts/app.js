@@ -13,7 +13,8 @@ angular
     'ngAnimate',
     'ngResource',
     'ngRoute',
-    'restangular'
+    'onlineSpectralSearchGuiApp.olssenStatsDirective',
+    'onlineSpectralSearchGuiApp.olssenWSService'
   ])
   .config(function ($routeProvider) {
     $routeProvider
