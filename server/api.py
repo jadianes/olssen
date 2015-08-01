@@ -2,6 +2,7 @@ from flask import Blueprint
 main = Blueprint('main', __name__)
 
 import json
+from flask.ext.cors import CORS
 from engine import SpectralSearch
 
 import logging
@@ -36,4 +37,10 @@ def create_app(spark_context):
     
     app = Flask(__name__)
     app.register_blueprint(main)
+
+    # One of the simplest configurations. Exposes all resources matching /api/* to
+    # CORS and allows the Content-Type header, which is necessary to POST JSON
+    # cross origin.
+    CORS(app, resources=r'/*', allow_headers='Content-Type')
+
     return app 
