@@ -1,4 +1,4 @@
-# An on-line Spectral Search server  
+# Olssen Web Service  
 
 Our server provides a RESTful-like API to perform **on-line spectral search** for proteomics
 spectral data. It is based on the [SpectraST](http://tools.proteomecenter.org/wiki/index.php?title=Software:SpectraST) 
