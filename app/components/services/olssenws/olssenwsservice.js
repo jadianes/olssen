@@ -5,12 +5,12 @@ var olssenWsUrl = "http://jupiter:5432";
 
 /**
  * @ngdoc service
- * @name onlineSpectralSearchGuiApp.olssenWSService
+ * @name olssenApp.olssenWSService
  * @description
  * # olssenWSService
- * Factory in the onlineSpectralSearchGuiApp.
+ * Factory in the olssenApp.
  */
-var olssenWsService = angular.module('onlineSpectralSearchGuiApp.olssenWSService', ['ngResource']);
+var olssenWsService = angular.module('olssenApp.olssenWSService', ['ngResource']);
 
 olssenWsService.factory('OlssenWSStatsService', ['$resource', 
   function ($resource) {

@@ -2,15 +2,15 @@
 
 /**
  * @ngdoc directive
- * @name onlineSpectralSearchGuiApp.directive:olssenStats
+ * @name olssenApp.directive:olssenStats
  * @description
  * # olssenStats
  */
-var olssenStatsDirective = angular.module('onlineSpectralSearchGuiApp.olssenStatsDirective', [])
+var olssenStatsDirective = angular.module('olssenApp.olssenStatsDirective', [])
 
 olssenStatsDirective.directive('olssenStats', function () {
     return {
-      templateUrl: 'scripts/directives/olssen-stats.html',
+      templateUrl: 'components/directives/olssen-stats/olssen-stats.html',
       restrict: 'E',
       controller: 'OlssenStatsDirectiveCtrl'
     };

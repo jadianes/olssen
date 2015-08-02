@@ -1,0 +1,11 @@
+<div>
+  <form novalidate class="simple-form">
+    <h5>Input spectrum</h5> 
+    <input type="text" ng-model="search.query" /><br />
+    <h5>Max. results<h5>
+    <input type="text" ng-model="search.maxResults" value="10" /><br />
+    <input type="submit" ng-click="update(search)" value="Search" />
+  </form>
+  <pre>form = {{search | json}}</pre>
+  <pre>master = {{result | json}}</pre>
+</div>

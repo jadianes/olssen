@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="onlineSpectralSearchGuiApp">
+  <body ng-app="olssenApp">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -33,13 +33,14 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">OLSSEN</a>
+            <a class="navbar-brand" href="#/">Olssen</a>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
               <li class="active"><a href="#/">Home</a></li>
+              <li><a ng-href="#/search">Search</a><li>
               <li><a ng-href="#/stats">Statistics</a></li>
               <li><a ng-href="#/about">About</a></li>
             </ul>
@@ -82,12 +83,12 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/stats.js"></script>
-        <script src="scripts/services/olssenwsservice.js"></script>
-        <script src="scripts/directives/olssen-stats.js"></script>
+        <script src="app.js"></script>
+        <script src="views/main/main.js"></script>
+        <script src="views/about/about.js"></script>
+        <script src="views/stats/stats.js"></script>
+        <script src="components/services/olssenws/olssenwsservice.js"></script>
+        <script src="components/directives/olssen-stats/olssen-stats.js"></script>
         <!-- endbuild -->
 </body>
 </html>
