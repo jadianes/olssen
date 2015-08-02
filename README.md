@@ -31,16 +31,12 @@ format):
 - `GET /stats`: returns statistics about the spectral libraries that have been
 loaded, including its name and peptide counts.  
  
-- `POST /search`: spectral search for a given peak list as an array of 
-(mz, intensity) pairs.  
+- `POST /search`: spectral search for a given peak list as an **file** of 
+(mz, intensity) pairs (MGF file format).  
 
-#### Examples  
+### Samples  
 
-    curl --data-binary @samples/query.mgf http://<server_IP>:5432/search   
-
-Where the file `query.mgf` contains the list of peaks to search for, and
-`<server_IP>` is the IP address of the host where `server.py` is running.
-Here we are asuming that we are at the root where `samples/` folder is located.      
+Where the file `query.mgf` contains a list of peaks to search for. 
 
 ## Getting the libraries  
 
