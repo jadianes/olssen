@@ -1,6 +1,7 @@
 # online-spectral-search-gui
 
-![image](assets/main_screenshot.jpg)
+![center](assets/main_screenshot.png)
+![center](assets/search_screenshot.png)
 
 This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
 version 0.12.0.
