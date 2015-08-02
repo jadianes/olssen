@@ -26,3 +26,19 @@ olssenWsService.factory('OlssenWSStatsService', ['$resource',
     );
   }
 ]);
+
+olssenWsService.factory('OlssenWSSearchService', ['$resource',
+  function ($resource) {
+    // Public API here
+    return $resource(
+      olssenWsUrl + '/search',
+      {},
+      {
+        search: {
+          method: 'POST',
+          isArray: true,
+        }
+      }
+    );
+  }
+]);

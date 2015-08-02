@@ -13,9 +13,11 @@ angular
     'ngAnimate',
     'ngResource',
     'ngRoute',
+    'angularFileUpload',
     'olssenApp.mainView',
     'olssenApp.aboutView',
     'olssenApp.statsView',
+    'olssenApp.searchView',
     'olssenApp.olssenStatsDirective',
     'olssenApp.olssenWSService'
   ])
