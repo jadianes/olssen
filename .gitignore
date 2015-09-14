@@ -1,0 +1,14 @@
+ipython_notebook_spark.out
+*.gz
+*.pyc
+**/.ipynb_checkpoints/
+.ipynb_checkpoints/
+**/metastore_db/
+**/derby.log
+**/Human.msp.gz
+**/human/
+**/contaminants/
+**/Contaminants.msp.gz
+**/mouse/
+**/Mouse.msp.gz
+
