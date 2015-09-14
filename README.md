@@ -7,14 +7,14 @@ algorithm for spectral search and uses [PRIDE Cluster spectral libraries](http:/
 
 ## Components  
 
-[Olssen Web Service](https://github.com/jadianes/olssen-ws)  
+#### [Olssen Web Service](https://github.com/jadianes/olssen-ws)  
 
 The [server](https://github.com/olssen/olssen-ws) is buit for scalability and performance working with big datasets. It uses 
 [Flask](http://flask.pocoo.org/) on top of [CherryPy's server](http://www.cherrypy.org/) 
 and performs its spectral searches using an engine based on [Apache Spark](https://spark.apache.org/) 
 clusters.  
 
-[Olssen GUI](https://github.com/jadianes/olssen-gui)  
+#### [Olssen GUI](https://github.com/jadianes/olssen-gui)  
 
 The client [Web Application](https://github.com/olssen/olssen-gui) can be used on top of the web service and is ideal for data visualisation and individual spectral search.  
 
@@ -29,6 +29,6 @@ version 0.12.0.
 These are some IPython/Jupyter notebooks to explore different spectral search concepts and
 procedures used in our on-line search server.  
 
-### [Loading a PRIDE Cluster library into a Spark RDD](notebooks/read-spectrum-lib.ipynb)  
+#### [Loading a PRIDE Cluster library into a Spark RDD](notebooks/read-spectrum-lib.ipynb)  
 
-### [The SpectraST algorithm for spectral search](notebooks/spectraST.ipynb)  
+#### [The SpectraST algorithm for spectral search](notebooks/spectraST.ipynb)  
