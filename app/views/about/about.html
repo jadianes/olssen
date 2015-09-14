@@ -1,0 +1,12 @@
+<h4>An On-line Spectral Search ENgine</h4>
+<p>
+The OLSSEN server provides a RESTful-like API to perform <em>on-line spectral search</em> for proteomics spectral data. It is based on the <a href="http://tools.proteomecenter.org/wiki/index.php?title=Software:SpectraST">SpectraST</a> 
+algorithm for spectral search and uses <a href="http://wwwdev.ebi.ac.uk/pride/cluster/#/libraries">PRIDE Cluster spectral libraries</a>.
+</p>  
+
+<p>
+The server is buit for <em>scalability and performance</em> working with big datasets. It uses <a href="http://flask.pocoo.org/">Flask</a> on top of <a href="http://www.cherrypy.org/">CherryPy's server</a> and performs its spectral searches using an engine based on <a href="https://spark.apache.org/">Apache Spark</a> clusters. The server has a very simple deployment cycle (see more on <a href="https://github.com/jadianes/online-spectral-search-ws">GitHub</a>.  
+</p>
+
+<p>This web-app is built using AngularJS and the yeoman generator on top of the OLSSEN web service.</p>
+

@@ -12,3 +12,8 @@ ipython_notebook_spark.out
 **/mouse/
 **/Mouse.msp.gz
 
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/bower_components
