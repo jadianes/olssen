@@ -18,9 +18,17 @@ clusters.
 
 The client [Web Application](https://github.com/olssen/olssen-gui) can be used on top of the web service and is ideal for data visualisation and individual spectral search.  
 
-![center](images/main_screenshot.png) 
-![center](images/search_screenshot.png)
+![center](gui/assets/main_screenshot.png) 
+![center](gui/assets/search_screenshot.png)
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
+This GUI AngularJS project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
 version 0.12.0.
 
+## Concepts  
+
+These are some IPython/Jupyter notebooks to explore different spectral search concepts and
+procedures used in our on-line search server.  
+
+### [Loading a PRIDE Cluster library into a Spark RDD](notebooks/read-spectrum-lib.ipynb)  
+
+### [The SpectraST algorithm for spectral search](notebooks/spectraST.ipynb)  

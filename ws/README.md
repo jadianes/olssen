@@ -65,12 +65,3 @@ pickle file for later use by the server. Use it through the provided shell scrip
 
     ./create_lib_file.sh ../spectrumlibs/contaminants ../spectrumlibs/contaminants/lib.file  
 
- 
-## Concepts  
-
-These are some IPython/Jupyter notebooks to explore different spectral search concepts and
-procedures used in our on-line search server.  
-
-### [Loading a PRIDE Cluster library into a Spark RDD](notebooks/read-spectrum-lib.ipynb)  
-
-### [The SpectraST algorithm for spectral search](notebooks/spectraST.ipynb)  
